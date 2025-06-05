@@ -1,0 +1,15 @@
+type Dog {
+
+    id: Int
+    name: String
+
+    shelter: Shelter
+}
+
+type Shelter {
+    location: String
+}
+
+type Query {
+    dogs  : [Dog]
+}

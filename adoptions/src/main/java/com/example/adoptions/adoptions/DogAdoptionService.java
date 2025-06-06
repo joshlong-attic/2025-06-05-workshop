@@ -32,8 +32,6 @@ class DogAdoptionGrpcService extends AdoptionsGrpc.AdoptionsImplBase {
 
     @Override
     public void all(Empty request, StreamObserver<Dogs> responseObserver) {
-
-
         var dogs = dogAdoptionService
                 .dogs()
                 .stream()
@@ -43,10 +41,8 @@ class DogAdoptionGrpcService extends AdoptionsGrpc.AdoptionsImplBase {
                         .setName(dog.name())
                         .build())
                 .toList();
-
         responseObserver.onNext(Dogs.newBuilder().addAllDogs(dogs).build());
         responseObserver.onCompleted();
-
     }
 
 }

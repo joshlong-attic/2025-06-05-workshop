@@ -54,21 +54,19 @@ record Shelter(String location) {
 @Controller
 class DogAdoptionGraphqlController {
 
-
     private final DogAdoptionService dogAdoptionService;
 
     DogAdoptionGraphqlController(DogAdoptionService dogAdoptionService) {
         this.dogAdoptionService = dogAdoptionService;
     }
 
-
     @BatchMapping
-    Map<Dog, Shelter> shelter(List<Dog> dog) {
+    Map<Dog, Shelter> shelter(List<Dog> dogList) {
         // todo make a network call
-        System.out.println("getting shelters for " + dog);
-
+        // todo select  * from shelter where dog_id IN (?,?,?,..)
+        System.out.println("getting shelters for " + dogList);
         var map = new HashMap<Dog, Shelter>();
-        for (var d : dog)
+        for (var d : dogList)
             map.put(d, new Shelter("Utrecht"));
         return map;
     }
@@ -117,7 +115,6 @@ class DogAdoptionService {
     }
 
     void adopt(int dogId, String owner) {
-
         dogRepository.findById(dogId).ifPresent(dog -> {
             var updated = dogRepository
                     .save(new Dog(dog.id(), dog.name(), owner, dog.description()));
